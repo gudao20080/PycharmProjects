@@ -314,15 +314,62 @@ class MovieHandler(xml.sax.ContentHandler):
             self.description = content
 
 
-if __name__ == '__main__':
-    # 创建一个XMLReader
-    parser = xml.sax.make_parser()
+# if __name__ == '__main__':
+#     # 创建一个XMLReader
+#     parser = xml.sax.make_parser()
+#
+#     # 打开命名空间
+#     parser.setFeature(xml.sax.handler.feature_namespaces, 0)
+#
+#     # 重写ContentHandler
+#     handler = MovieHandler()
+#     parser.setContentHandler(handler)
+#
+#     parser.parse('movies.xml')
 
-    # 打开命名空间
-    parser.setFeature(xml.sax.handler.feature_namespaces, 0)
+from xml.dom.minidom import parse
+import xml.dom.minidom
 
-    # 重写ContentHandler
-    handler = MovieHandler()
-    parser.setContentHandler(handler)
+# 使用minidom解析器打开 xml 文档
+domTree = xml.dom.minidom.parse('movies.xml')
+collection = domTree.documentElement
+if collection.hasAttribute('shelf'):
+    print('Root element : %s ' % collection.getAttribute('shelf'))
 
-    parser.parse('movies.xml')
+# 在集合中获取所有电影
+movies = collection.getElementsByTagName('movie')
+for movie in movies:
+    print('************movie******************')
+    if movie.hasAttribute('title'):
+        print('Title: %s ' % movie.getAttribute('title'))
+
+import json
+
+
+import time
+
+ticks = time.time()
+print('当前时间： ' , ticks)
+
+localTime = time.localtime(time.time())
+print('本地时间： ', localTime)
+
+print(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()))
+
+# 格式化成Sat Mar 28 22:24:24 2016形式
+print (time.strftime("%a %b %d %H:%M:%S %Y", time.localtime()))
+
+# 将格式字符串转换为时间戳
+a = "Sat Mar 28 22:24:24 2016"
+print (time.mktime(time.strptime(a,"%a %b %d %H:%M:%S %Y")))
+
+import calendar
+
+cal = calendar.month(2016, 8)
+print('2016 1的日历')
+print(cal)
+
+time_clock = time.clock()
+print('time_clock: ', time_clock)
+time_clock = time.clock()
+print('time_clock: ', time_clock)
