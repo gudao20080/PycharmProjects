@@ -345,11 +345,10 @@ for movie in movies:
 
 import json
 
-
 import time
 
 ticks = time.time()
-print('当前时间： ' , ticks)
+print('当前时间： ', ticks)
 
 localTime = time.localtime(time.time())
 print('本地时间： ', localTime)
@@ -357,11 +356,11 @@ print('本地时间： ', localTime)
 print(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()))
 
 # 格式化成Sat Mar 28 22:24:24 2016形式
-print (time.strftime("%a %b %d %H:%M:%S %Y", time.localtime()))
+print(time.strftime("%a %b %d %H:%M:%S %Y", time.localtime()))
 
 # 将格式字符串转换为时间戳
 a = "Sat Mar 28 22:24:24 2016"
-print (time.mktime(time.strptime(a,"%a %b %d %H:%M:%S %Y")))
+print(time.mktime(time.strptime(a, "%a %b %d %H:%M:%S %Y")))
 
 import calendar
 
@@ -373,3 +372,77 @@ time_clock = time.clock()
 print('time_clock: ', time_clock)
 time_clock = time.clock()
 print('time_clock: ', time_clock)
+
+
+import functools
+
+def decorated_by(func):
+    func.__doc__ += '\n Decorated by decorated_by'
+    return func
+
+
+def decorated_by2(func):
+    func.__doc__ += '\n Decorated by decorated_by2'
+    return func
+
+
+@decorated_by2
+@decorated_by
+def add(x, y):
+    '''Return th sum of x and y.'''
+    return x + y
+
+
+print(add.__doc__)
+
+registry = []
+
+
+def register(decorated):
+    registry.append(decorated)
+    return decorated
+
+
+answers = []
+
+
+@register
+def foo():
+    return 3
+
+
+@register
+def bar():
+    return 5
+
+
+for func in registry:
+    answers.append(func())
+
+print(answers)
+
+
+def requires_ints(decorated):
+    @functools.wraps(decorated)
+    def inner(*args, ** kwargs):
+    # Get any values that may have been sent as keyword arguments.
+        kwarg_values = [i for i in kwargs.values()]
+        # Iterate over every value sent to the decorated method， and
+        # ensure that each one is an integer; raise TypeError if not.
+        for arg in list(args) + kwarg_values:
+            if not isinstance(arg, int):
+                raise TypeError('%s only accepts integers as arguments.' % decorated_by.__name__)
+
+                # Run the decorated method， and return the result.
+            return decorated(*args, **kwargs)
+    return inner
+
+
+@requires_ints
+def foo(x, y):
+    """ Return the sum of x and y"""
+    return x + y
+
+print(help(foo))
+print(foo(3, 5))
+
