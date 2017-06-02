@@ -1,5 +1,7 @@
 import heapq
 
+import sys
+
 records = [
     ('foo', 1, 2),
     ('bar', 'hello'),
@@ -145,4 +147,44 @@ print(more5)
 result = list(compress(addresses, more5))
 print(result)
 
+import re
 
+text = 'Today is 11/27/2012. PyCon starts 3/13/2013.'
+s = re.sub(r'(\d+)/(\d+)/(\d+)', r'\3-\1-\2', text)
+print(s)
+
+import unicodedata
+
+s = 'pýtĥöñ\fis\tawesome\r\n'
+print("s: ", s)
+remap = {
+    ord('\t'): " ",
+    ord('\f'): " ",
+    ord('\r'): None
+}
+a = s.translate(remap)
+
+print("a : ", a)
+cmb_chrs = dict.fromkeys(c for c in range(sys.maxunicode) if unicodedata.combining(chr(c)))
+print(cmb_chrs)
+s.format_map(vars())
+
+
+class safesub(dict):
+    def __missing__(self, key):
+        return '{' + key + '}'
+
+import textwrap
+s = "Look into my eyes, look into my eyes, the eyes, the eyes, \
+the eyes, not around the eyes, don't look around the eyes, \
+look into my eyes, you're under."
+print(textwrap.fill(s, 20))
+
+s = 'Elements are written as "<tag>text</tag>".'
+
+import html
+
+print(s)
+print(html.escape(s))
+
+int.to_bytes()
