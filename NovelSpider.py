@@ -4,6 +4,7 @@ import requests
 from urllib import request
 
 import time
+
 from bs4 import BeautifulSoup
 import chardet
 
@@ -96,6 +97,7 @@ if __name__ == '__main__':
     # print(segments)
     i = 0
 
+    unicode(" ")
     for k, v in segments.items():
         print(k, v)
         segment_content = gain_html_doc(v)
