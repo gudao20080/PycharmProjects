@@ -46,8 +46,7 @@ def gain_html_doc(url: str):
 
     if url and type(url) == str:
         headers = {}
-        headers[
-            'User-Agent'] = ' Mozilla / 5.0(Windows NT 10.0; Win64; x64) AppleWebKit / 537.36(KHTML, like; Gecko) Chrome / 58.0; .3029; .81; Safari / 537.36'
+        headers['User-Agent'] = ' Mozilla / 5.0(Windows NT 10.0; Win64; x64) AppleWebKit / 537.36(KHTML, like; Gecko) Chrome / 58.0; .3029; .81; Safari / 537.36'
         req = request.Request(url, headers=headers)
         response = request.urlopen(req)
         data_bytes = response.read()
@@ -86,18 +85,20 @@ def parseNovelHtml(html_doc: str, file_path: str):
     # return content_tag.text
 
 if __name__ == '__main__':
-    novelUrl = 'http://www.biqukan.com/1_1094/'
+    # novelUrl = 'http://www.biqukan.com/1_1094/'
+    novelUrl = 'http://www.biqukan.com/11_11025/4088520.html'
 
     chapter_list_doc = gain_html_doc(novelUrl)
-
-    segments = gain_novel_segments(chapter_list_doc)
+    f = open("D:/cc.txt", 'w', encoding='utf-8')
+    f.write(chapter_list_doc)
+    print(chapter_list_doc)
+    # segments = gain_novel_segments(chapter_list_doc)
 
 
     print(len(segments))
     # print(segments)
     i = 0
 
-    unicode(" ")
     for k, v in segments.items():
         print(k, v)
         segment_content = gain_html_doc(v)
