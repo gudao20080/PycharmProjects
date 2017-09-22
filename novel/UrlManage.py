@@ -34,18 +34,25 @@ class UrlManager(object):
 
         return ordered_dict
 
-    s = ""
-    def parseSection(self, soup: BeautifulSoup) -> tuple:
+    def parseSection(self, soup: BeautifulSoup) -> map:
         content_soup = soup.find('div', attrs={"class": "content"})
         title = content_soup.h1.get_text()
-        # print(type(title))
-        # print(soup)
-        global s
 
-        content_tag = content_soup.find('div', attrs={"id": "content", 'class': 'showtxt'})
-        for child in content_tag.children:
-            if type(child) is NavigableString:
-                # print(child)
-                s.join(child)
+        txt_tag = content_soup.find('div', attrs={"id": "content", 'class': 'showtxt'})
+        # for child in txt_tag.children:
+        lines = []
+        s = ''
+        for child in txt_tag.stripped_strings:
+            # print(child, type(child))
+            lines.append(child)
+            # global s
+            if "biqukan" not in child and '天才壹秒記住' not in child:
+                s += child + '\n'
 
-        print("ss: ", s)
+        # print(s)
+        return {title: s}
+
+
+class StoreManager(object):
+    def __init__(self) -> None:
+        pass

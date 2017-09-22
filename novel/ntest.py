@@ -34,4 +34,6 @@ section_url = "http://www.biqukan.com/11_11025/4088520.html"
 manager = UrlManager(section_url)
 section_soup = manager.crawlWeb()
 # print(section_soup)
-manager.parseSection(section_soup)
+section_tuple = manager.parseSection(section_soup)
+for item in section_tuple.items():
+    print(item[1])
